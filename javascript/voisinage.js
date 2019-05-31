@@ -10,7 +10,7 @@ function generePermutation(xi) {
 	 do {
 	 	  alea2 = getRandomInt(xi.length);
 	 	} while (alea1 != alea2);
-	 
+
 	 return [alea1, alea2];
 }
 

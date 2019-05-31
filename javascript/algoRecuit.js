@@ -7,13 +7,16 @@
 	n2 : nombre de mouvements à la température tk
 	mu : baisse de température ( < 1)
 	*/
-exports.algo = function algoRecuit(voisin, fObj, x0, t0, n1, n2, mu) { // NOTE : On cherche le minimum !
+exports.algo = function algoRecuit(voisin, fObj, x0, params) { // NOTE : On cherche le minimum !
   var xmin = x0,
   fmin = fObj(x0),
-  tk = t0, // La température actuelle
+  tk = params.temperature, // La température actuelle
   xi = x0, // La solution courante
-  i = 0;
-  
+  i = 0,
+  n1 = params.tempChange,
+  n2 = params.step
+  mu = params.mu;
+
   for(let k = 0; k < n1; k++) {
   	 for(let l = 1; l < n2; l++) {
   	 	  let fXi = fObj(xi);
@@ -36,6 +39,6 @@ exports.algo = function algoRecuit(voisin, fObj, x0, t0, n1, n2, mu) { // NOTE :
   	 }
   	 tk = mu * tk;
   }
-  
+
   return xmin;
 }

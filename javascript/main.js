@@ -1,20 +1,31 @@
-const voisins = require("voisinage");
-const recuit = require("algoRecuit");
-const tabou = require("algoTabou");
+const voisins = require("./voisinage");
+const recuit = require("./algoRecuit");
+const tabou = require("./algoTabou");
+const utils = require("./algo");
+const fs = require("fs");
+const param = require("./param");
 
 
-function main() {
-	
-	var fitness = function(){};
-	var solutionInitiale = [];
-	var temperatureInitiale = 37.5;
-	var nbChangementsTemperature = 15;
-	var nbPasParTemperature = 15;
-	var coeffBaisseTemperature = 0.4; // Max 1
+function main(filePath, parametres) {
+
+	const instance = utils.File.createTaillardInstance(path);
+	const voisinage = voisins.permute;
+	const fitness = (sol) => instance.calculeFitness(sol);
+	const params = parametres;
+	const solutionInitiale = instance.createSolution(params.shuffleInitialSolution);
 
   // Appel à recuit :
-  let solution = recuit.algo(voisins.permute, fitness,
-  	                          solutionInitiale, temperatureInitiale,
-  	                          nbChangementsTemperature, nbPasParTemperature,
-  	                          coeffBaisseTemperature);
+  let solution = recuit.algo(voisinage, fitness,
+  	                          solutionInitiale, params);
+	console.log(solution);
 }
+
+function test() {
+	const path = "taillard/tai12a.dat";
+	// console.log(fs.readFileSync(path));
+	const instance = utils.File.createTaillardInstance(path);
+	console.log(instance);
+}
+
+const path = "taillard/tai12a.dat";
+main(path, param.group1);
